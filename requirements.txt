@@ -11,3 +11,4 @@ chromadb
 sentence-transformers
 huggingface_hub
 protobuf==3.20.3
+pysqlite3-binary
