@@ -266,7 +266,7 @@ with st.sidebar:
         <p>A cutting-edge AI assistant that delivers natural, context-aware conversations. Maintains dialogue continuity for coherent discussions and provides insightful, well-structured responses.</p>
         <hr>
         <h4>Developer</h4>
-        <p>👨‍💻 <strong>Muhammad Awais Lal</strong></p>
+        <p>👨‍💻 <strong>Muhammad Awais Laal</strong></p>
         <p>Generative AI Developer</p>
         <p style="font-size:0.8rem; color:#555;">Built with Streamlit & LangChain</p>
     </div>
