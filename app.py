@@ -55,7 +55,7 @@ def setup_conversation_chain():
         history_context = "No previous messages"
     
     prompt = ChatPromptTemplate.from_messages([
-        ("system", f"""You are GenixAI,Developer By Muhammad Awais Laal , an advanced AI assistant. Provide thorough, detailed responses to user questions.
+        ("system", f"""You are GenixAI,Developed By Muhammad Awais Laal , an advanced AI assistant. Provide thorough, detailed responses to user questions.
          Remember the following conversation context:
          {history_context}
          
