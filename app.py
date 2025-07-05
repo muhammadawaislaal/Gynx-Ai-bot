@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import logging
 import uuid
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
 from langchain_chroma import Chroma
 from langchain_core.prompts import ChatPromptTemplate
@@ -20,9 +20,6 @@ logger = logging.getLogger(__name__)
 
 # Load environment variables
 load_dotenv()
-
-# Remove hardcoded Tesseract path for Streamlit Cloud
-# pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 # Cache embeddings
 @st.cache_resource
@@ -124,7 +121,7 @@ def setup_conversation_chain():
         return
     
     prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are GenixAI, a helpful assistant. Use the following context and chat history to answer the question. If no context is provided, use your general knowledge.\n\nContext: {context}\n\nChat History: {chat_history}"),
+        ("system", "You are GenixAI, a helpful assistant. Use the following context to answer the question. If no context is provided, use your general knowledge.\n\nContext: {context}"),
         ("human", "{question}")
     ])
     
@@ -132,21 +129,14 @@ def setup_conversation_chain():
         logger.info("Setting up conversation chain")
         if st.session_state.vectorstore:
             st.session_state.conversation = (
-                {
-                    "context": st.session_state.vectorstore.as_retriever(search_kwargs={"k": 4}),
-                    "chat_history": lambda x: [HumanMessage(content=m["content"]) if m["role"] == "user" else AIMessage(content=m["content"]) for m in x["chat_history"]],
-                    "question": RunnablePassthrough()
-                }
+                {"context": st.session_state.vectorstore.as_retriever(search_kwargs={"k": 4}), 
+                 "question": RunnablePassthrough()}
                 | prompt
                 | llm
             )
         else:
             st.session_state.conversation = (
-                {
-                    "context": lambda x: "",
-                    "chat_history": lambda x: [HumanMessage(content=m["content"]) if m["role"] == "user" else AIMessage(content=m["content"]) for m in x["chat_history"]],
-                    "question": RunnablePassthrough()
-                }
+                {"context": lambda x: "", "question": RunnablePassthrough()}
                 | prompt
                 | llm
             )
@@ -198,8 +188,8 @@ with st.sidebar:
     if st.session_state.chat_sessions:
         chat_options = {f"Chat {i+1} ({chat_id[:8]})": chat_id for i, chat_id in enumerate(st.session_state.chat_sessions.keys())}
         selected_chat = st.selectbox("Select Chat Session", list(chat_options.keys()), 
-                                  index=list(chat_options.values()).index(st.session_state.current_chat_id) 
-                                  if st.session_state.current_chat_id in chat_options.values() else 0)
+                                   index=list(chat_options.values()).index(st.session_state.current_chat_id) 
+                                   if st.session_state.current_chat_id in chat_options.values() else 0)
         st.session_state.current_chat_id = chat_options[selected_chat]
     
     st.subheader("About GenixAI")
@@ -241,10 +231,7 @@ if prompt := st.chat_input("Type your message here..."):
             logger.info(f"Generating response for prompt: {prompt}")
             with st.chat_message("assistant", avatar="🤖"):
                 with st.spinner("Generating response..."):
-                    response = st.session_state.conversation.invoke({
-                        "question": prompt,
-                        "chat_history": st.session_state.chat_sessions[st.session_state.current_chat_id]
-                    })
+                    response = st.session_state.conversation.invoke({"question": prompt})
                     answer = response.content
                     st.markdown(answer)
                     if st.session_state.vectorstore:
