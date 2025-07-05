@@ -3,7 +3,7 @@ langchain-groq==0.3.5
 langchain-huggingface==0.3.0
 langchain-chroma==0.1.4
 langchain-community==0.3.1
-langchain-core==0.3.10
+langchain-core==0.3.67
 pytesseract==0.3.13
 pillow==10.4.0
 python-dotenv==1.0.1
