@@ -1,12 +1,12 @@
-echo streamlit==1.46.1 > requirements.txt
-echo langchain-groq==0.3.5 >> requirements.txt
-echo langchain-huggingface >> requirements.txt
-echo langchain-chroma >> requirements.txt
-echo langchain-community >> requirements.txt
-echo langchain-core >> requirements.txt
-echo pytesseract==0.3.13 >> requirements.txt
-echo pillow >> requirements.txt
-echo python-dotenv >> requirements.txt
-echo chromadb >> requirements.txt
-echo sentence-transformers >> requirements.txt
-echo huggingface_hub >> requirements.txt
+streamlit==1.46.1
+langchain-groq==0.3.5
+langchain-huggingface
+langchain-chroma
+langchain-community
+langchain-core
+pytesseract==0.3.13
+pillow
+python-dotenv
+chromadb
+sentence-transformers
+huggingface_hub
