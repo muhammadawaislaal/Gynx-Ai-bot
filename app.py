@@ -273,7 +273,7 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
 # Main app interface
-st.title("💬 GenixAI Chat")
+st.title("💬 Gynx Ai Chat")
 st.caption("Your intelligent assistant with conversation memory - Ask me anything!")
 
 # Display chat history with timestamps
