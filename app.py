@@ -55,7 +55,7 @@ def setup_conversation_chain():
         history_context = "No previous messages"
     
     prompt = ChatPromptTemplate.from_messages([
-        ("system", f"""You are GenixAI,Developed By Muhammad Awais Laal , an advanced AI assistant. Provide thorough, detailed responses to user questions.
+        ("system", f"""You are Gynx Ai,Developed By Muhammad Awais Laal , an advanced AI assistant. Provide thorough, detailed responses to user questions.
          Remember the following conversation context:
          {history_context}
          
@@ -222,7 +222,7 @@ st.markdown("""
 
 # Sidebar settings
 with st.sidebar:
-    st.title("⚙️ GenixAI Settings")
+    st.title("⚙️ Gynx Ai Settings")
     
     # Model settings
     with st.expander("Model Configuration", expanded=True):
@@ -262,7 +262,7 @@ with st.sidebar:
     # Developer information with improved visibility
     st.markdown("""
     <div class="developer-card">
-        <h4>About GenixAI</h4>
+        <h4>About Gynx Ai</h4>
         <p>A cutting-edge AI assistant that delivers natural, context-aware conversations. Maintains dialogue continuity for coherent discussions and provides insightful, well-structured responses.</p>
         <hr>
         <h4>Developer</h4>
