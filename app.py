@@ -8,22 +8,24 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from dotenv import load_dotenv
 
-# Set up logging
+# Setup logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+load_dotenv()  # Load .env if present
 
-# Load environment variables (for local testing)
-load_dotenv()
+# 🔊 Autoplay light bird music
+if "music_playing" not in st.session_state:
+    st.session_state.music_playing = True
 
-# Initialize LLM with enhanced settings
+if st.session_state.music_playing:
+    st.audio("https://cdn.pixabay.com/download/audio/2022/03/15/audio_5db90e3b18.mp3", autoplay=True)
+
+# Initialize LLM
 def initialize_llm(model_name, temperature, max_tokens):
     try:
-        logger.info(f"Initializing LLM: {model_name}")
-        groq_api_key = st.secrets.get("GROQ_API_KEY")  # ✅ Correct way for Streamlit secrets
-
+        groq_api_key = st.secrets.get("GROQ_API_KEY")
         if not groq_api_key:
-            st.error("GROQ_API_KEY not found. Please set it in Streamlit secrets.")
-            logger.error("GROQ_API_KEY not found")
+            st.error("GROQ_API_KEY not set in Streamlit secrets.")
             return None
 
         return ChatGroq(
@@ -38,46 +40,48 @@ def initialize_llm(model_name, temperature, max_tokens):
             }
         )
     except Exception as e:
-        st.error(f"Error initializing {model_name}: {str(e)}")
-        logger.error(f"LLM initialization error for {model_name}: {str(e)}")
+        st.error(f"LLM init error: {str(e)}")
+        logger.error(str(e))
         return None
 
-# Enhanced conversation chain setup
+# Setup conversation
 def setup_conversation_chain():
     llm = initialize_llm(selected_model, temperature, max_tokens)
     if not llm:
         return
 
-    # System prompt with memory context
+    history_context = ""
     if st.session_state.current_chat_id and st.session_state.chat_sessions.get(st.session_state.current_chat_id):
         chat_history = st.session_state.chat_sessions[st.session_state.current_chat_id]
         history_context = "\n".join([f"{msg['role']}: {msg['content']}" for msg in chat_history[-6:]])
     else:
-        history_context = "No previous messages"
+        history_context = "No previous messages."
 
     prompt = ChatPromptTemplate.from_messages([
-        ("system", f"""You are Gynx Ai, Developed By Muhammad Awais Laal, an advanced AI assistant. Provide thorough, detailed responses to user questions.
-         Remember the following conversation context:
-         {history_context}
-         
-         Current conversation:
-         """),
+        ("system", f"""
+You are Gynx Ai, developed by Muhammad Awais Laal — a helpful, elegant assistant. 
+Always respond step-by-step, using numbered or bulleted explanations for clarity. 
+Never rush. Ensure responses are easy to follow for beginners.
+        
+Previous conversation:
+{history_context}
+
+Now respond to the current question below.
+"""),
         ("human", "{question}")
     ])
 
     try:
-        logger.info("Setting up conversation chain")
         st.session_state.conversation = (
             {"question": RunnablePassthrough()}
             | prompt
             | llm
         )
-        logger.info("Conversation chain set up successfully")
     except Exception as e:
-        st.error(f"Error setting up conversation chain: {str(e)}")
-        logger.error(f"Conversation chain setup error: {str(e)}")
+        st.error(f"Error in conversation chain: {str(e)}")
+        logger.error(str(e))
 
-# Initialize session state
+# Initialize session
 if "chat_sessions" not in st.session_state:
     st.session_state.chat_sessions = {}
 if "current_chat_id" not in st.session_state:
@@ -85,14 +89,7 @@ if "current_chat_id" not in st.session_state:
 if "conversation" not in st.session_state:
     st.session_state.conversation = None
 
-# Custom CSS for beautiful chat interface
-st.markdown("""
-<style>
-/* Chat bubbles and layout styling omitted for brevity – identical to original code */
-</style>
-""", unsafe_allow_html=True)
-
-# Sidebar settings
+# 💡 Sidebar
 with st.sidebar:
     st.title("⚙️ Gynx Ai Settings")
 
@@ -110,10 +107,11 @@ with st.sidebar:
         max_tokens = st.slider("Response Length", 100, 4000, 2000, 100)
 
     with st.expander("Chat Sessions", expanded=True):
-        if st.button("➕ New Chat", use_container_width=True, key="new_chat"):
+        if st.button("➕ New Chat", use_container_width=True):
             new_chat_id = str(uuid.uuid4())
             st.session_state.chat_sessions[new_chat_id] = []
             st.session_state.current_chat_id = new_chat_id
+            st.session_state.conversation = None
             st.rerun()
 
         if st.session_state.chat_sessions:
@@ -129,40 +127,39 @@ with st.sidebar:
             )
             st.session_state.current_chat_id = chat_options[selected_chat]
 
+    if st.button("🔊 Toggle Bird Music"):
+        st.session_state.music_playing = not st.session_state.music_playing
+        st.rerun()
+
     st.markdown("""
-    <div class="developer-card">
-        <h4>About Gynx Ai</h4>
-        <p>A cutting-edge AI assistant that delivers natural, context-aware conversations. Maintains dialogue continuity for coherent discussions and provides insightful, well-structured responses.</p>
-        <hr>
-        <h4>Developer</h4>
-        <p>👨‍💻 <strong>Muhammad Awais Laal</strong></p>
-        <p>Generative AI Developer</p>
-        <p style="font-size:0.8rem; color:#555;">Built with Streamlit & LangChain</p>
-    </div>
+    <hr>
+    <h4>🧠 About Gynx Ai</h4>
+    <p>A conversational AI assistant that remembers context and provides beautifully explained answers.</p>
+    <p><strong>Developer:</strong> Muhammad Awais Laal</p>
+    <p style="font-size:0.85rem;">Built with ❤️ using Streamlit + LangChain + Groq</p>
     """, unsafe_allow_html=True)
 
-# Main chat UI
+# 🧠 Chat UI
 st.title("💬 Gynx Ai Chat")
-st.caption("Your intelligent assistant with conversation memory - Ask me anything!")
+st.caption("Understandable, elegant answers – explained step by step.")
 
+# Display previous messages
 if st.session_state.current_chat_id and st.session_state.chat_sessions.get(st.session_state.current_chat_id):
-    for message in st.session_state.chat_sessions[st.session_state.current_chat_id]:
-        with st.chat_message(message["role"], avatar="🤖" if message["role"] == "assistant" else "👤"):
-            st.markdown(message["content"])
-            st.markdown(f"<time>{time.strftime('%H:%M', time.localtime())}</time>", unsafe_allow_html=True)
+    for msg in st.session_state.chat_sessions[st.session_state.current_chat_id]:
+        with st.chat_message(msg["role"], avatar="🤖" if msg["role"] == "assistant" else "👤"):
+            st.markdown(msg["content"])
+            st.markdown(f"<time>{time.strftime('%H:%M', time.localtime(msg['timestamp']))}</time>", unsafe_allow_html=True)
 else:
-    st.info("Start a new conversation by typing a message below...")
-    st.image("https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-             use_container_width=True,
-             caption="Your AI Assistant Ready to Help")
+    st.info("Start a new chat by typing below ⬇️")
 
-# Chat input
-if prompt := st.chat_input("Type your message here..."):
+# User input
+if prompt := st.chat_input("Ask me anything..."):
     if not st.session_state.current_chat_id:
         new_chat_id = str(uuid.uuid4())
         st.session_state.chat_sessions[new_chat_id] = []
         st.session_state.current_chat_id = new_chat_id
 
+    # Append user message
     st.session_state.chat_sessions[st.session_state.current_chat_id].append({
         "role": "user",
         "content": prompt,
@@ -171,34 +168,34 @@ if prompt := st.chat_input("Type your message here..."):
 
     with st.chat_message("user", avatar="👤"):
         st.markdown(prompt)
-        st.markdown(f"<time>{time.strftime('%H:%M', time.localtime())}</time>", unsafe_allow_html=True)
 
+    # Initialize conversation chain
     if not st.session_state.conversation:
         setup_conversation_chain()
 
+    # Generate assistant response
     if st.session_state.conversation:
         try:
             with st.chat_message("assistant", avatar="🤖"):
-                with st.spinner("Thinking..."):
+                with st.spinner("Gynx is thinking..."):
                     response = st.session_state.conversation.invoke({"question": prompt})
                     answer = response.content
 
-                    response_container = st.empty()
                     full_response = ""
-                    for chunk in answer.split():
-                        full_response += chunk + " "
-                        response_container.markdown(full_response + "▌")
+                    display_area = st.empty()
+
+                    for word in answer.split():
+                        full_response += word + " "
+                        display_area.markdown(full_response + "▌")
                         time.sleep(0.05)
 
-                    response_container.markdown(full_response)
-                    st.markdown(f"<time>{time.strftime('%H:%M', time.localtime())}</time>", unsafe_allow_html=True)
-
-                st.session_state.chat_sessions[st.session_state.current_chat_id].append({
-                    "role": "assistant",
-                    "content": full_response,
-                    "timestamp": time.time()
-                })
+                    display_area.markdown(full_response)
+                    st.session_state.chat_sessions[st.session_state.current_chat_id].append({
+                        "role": "assistant",
+                        "content": full_response,
+                        "timestamp": time.time()
+                    })
 
         except Exception as e:
             st.error(f"Error generating response: {str(e)}")
-            logger.error(f"Response generation error: {str(e)}")
+            logger.error(f"Response error: {str(e)}")
