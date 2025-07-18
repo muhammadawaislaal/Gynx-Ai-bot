@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 def initialize_llm(model_name, temperature, max_tokens):
     try:
         logger.info(f"Initializing LLM: {model_name}")
-        groq_api_key = st.secrets["GROQ_API_KEY"]  # From secrets
+        groq_api_key = st.secrets["GROQ_API_KEY"]  # Secure from secrets
         return ChatGroq(
             groq_api_key=groq_api_key,
             model_name=model_name,
@@ -98,6 +98,14 @@ with st.sidebar:
             st.session_state.ratings[st.session_state.current_chat_id].append(rating)
             st.success("Rating submitted!")
 
+    # 📊 Rating Dashboard
+    st.markdown("---")
+    st.markdown("### 📈 Rating Dashboard")
+    if st.session_state.ratings:
+        for chat_id, ratings in st.session_state.ratings.items():
+            avg_rating = round(sum(ratings) / len(ratings), 2) if ratings else 0
+            st.write(f"Chat {list(st.session_state.chat_sessions.keys()).index(chat_id)+1}: ⭐ {avg_rating} ({len(ratings)} votes)")
+
     # 👨‍💻 Developer Info
     st.markdown("""
     <div style='background:#f0f8ff; padding:1rem; border-left:4px solid #075E54; border-radius:10px'>
@@ -111,10 +119,10 @@ with st.sidebar:
 st.title("💬 Gynx Ai Chat")
 st.caption("Ask anything — Gynx Ai replies in clean sections.")
 
-# 🎵 Background Music on Entry
+# 🎵 Background Nature Music (relaxing ambient)
 st.markdown("""
 <audio autoplay loop>
-  <source src="https://www.fesliyanstudios.com/play-mp3/387" type="audio/mpeg">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3" type="audio/mpeg">
 </audio>
 """, unsafe_allow_html=True)
 
@@ -136,10 +144,10 @@ col1, col2 = st.columns(2)
 for i in range(2):
     with col1:
         if st.button(suggestions[i]):
-            st.experimental_set_query_params(prompt=suggestions[i])
+            st.query_params(prompt=suggestions[i])
     with col2:
         if st.button(suggestions[i+2]):
-            st.experimental_set_query_params(prompt=suggestions[i+2])
+            st.query_params(prompt=suggestions[i+2])
 
 # 📝 Chat Input
 prompt = st.chat_input("Ask Gynx Ai something...")
