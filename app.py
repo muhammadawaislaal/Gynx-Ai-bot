@@ -101,7 +101,7 @@ with st.sidebar:
         with col1:
             selected_model = st.selectbox(
                 "Model",
-                ["llama3-70b-8192", "llama3-8b-8192", "gemma2-9b-it"],
+                ["gemma2-9b-it"],
                 index=0
             )
         with col2:
@@ -202,3 +202,4 @@ if prompt := st.chat_input("Type your message here..."):
         except Exception as e:
             st.error(f"Error generating response: {str(e)}")
             logger.error(f"Response generation error: {str(e)}")
+
