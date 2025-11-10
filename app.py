@@ -15,6 +15,17 @@ logger = logging.getLogger(__name__)
 # Load environment variables (for local testing)
 load_dotenv()
 
+# Available Groq models (updated list)
+AVAILABLE_MODELS = [
+    "llama-3.1-8b-instant",
+    "llama-3.3-70b-versatile", 
+    "llama-3.2-3b-preview",
+    "llama-3.2-1b-preview",
+    "llama-3.2-90b-text-preview",
+    "mixtral-8x7b-32768",
+    "gemma2-9b-it"  # Keeping it but it might not work
+]
+
 # Initialize LLM with enhanced settings
 def initialize_llm(model_name, temperature, max_tokens):
     try:
@@ -88,7 +99,73 @@ if "conversation" not in st.session_state:
 # Custom CSS for beautiful chat interface
 st.markdown("""
 <style>
-/* Chat bubbles and layout styling omitted for brevity – identical to original code */
+.chat-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.chat-message {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-message.user {
+    background-color: #2b313e;
+    border-left: 4px solid #ff4b4b;
+}
+
+.chat-message.assistant {
+    background-color: #1e1e1e;
+    border-left: 4px solid #00d4aa;
+}
+
+.chat-message .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+.chat-message .message {
+    flex: 1;
+}
+
+.chat-message time {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 0.5rem;
+}
+
+.developer-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    color: white;
+    margin-top: 2rem;
+}
+
+.developer-card h4 {
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+}
+
+.developer-card p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.stButton button {
+    width: 100%;
+    border-radius: 0.5rem;
+}
+
+.stSelectbox div[data-baseweb="select"] {
+    border-radius: 0.5rem;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -101,8 +178,8 @@ with st.sidebar:
         with col1:
             selected_model = st.selectbox(
                 "Model",
-                ["gemma2-9b-it"],
-                index=0
+                AVAILABLE_MODELS,
+                index=0  # Default to llama-3.1-8b-instant
             )
         with col2:
             temperature = st.slider("Creativity", 0.0, 1.0, 0.7, 0.05)
@@ -137,7 +214,7 @@ with st.sidebar:
         <h4>Developer</h4>
         <p>👨‍💻 <strong>Muhammad Awais Laal</strong></p>
         <p>Generative AI Developer</p>
-        <p style="font-size:0.8rem; color:#555;">Built with Streamlit & LangChain</p>
+        <p style="font-size:0.8rem; color:#ddd;">Built with Streamlit & LangChain</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -153,7 +230,7 @@ if st.session_state.current_chat_id and st.session_state.chat_sessions.get(st.se
 else:
     st.info("Start a new conversation by typing a message below...")
     st.image("https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-             use_container_width=True,
+             width=600,
              caption="Your AI Assistant Ready to Help")
 
 # Chat input
@@ -202,4 +279,3 @@ if prompt := st.chat_input("Type your message here..."):
         except Exception as e:
             st.error(f"Error generating response: {str(e)}")
             logger.error(f"Response generation error: {str(e)}")
-
