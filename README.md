@@ -1,21 +1,3 @@
-I'll reconstruct the README from the screenshot content in a clean, properly formatted way:
-
-```markdown
-<div align="center">
-
-# Gynx Ai Chat Interface
-
-![Python](https://img.shields.io/badge/python-3.9+-blue.svg)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)
-![LangChain](https://img.shields.io/badge/langChain-0.1+-orange.svg)
-![Groq](https://img.shields.io/badge/Groq_API-purple.svg)
-![Version](https://img.shields.io/badge/Version-1.0.0-green.svg)
-
-**Advanced AI Assistant with Conversation Memory | Context-Aware Responses | Multi-Model Support**
-
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://gynx-ai.streamlit.app)
-[![Report Bug](https://img.shields.io/badge/%F0%9F%90%9B-Report_Bug-red)](https://github.com/muhammadawaislaal/gynx-ai/issues)
-[![Feature Request](https://img.shields.io/badge/%F0%9F%92%A1-Feature_Request-blue)](https://github.com/muhammadawaislaal/gynx-ai/issues)
 
 </div>
 
