@@ -190,8 +190,20 @@ def chat():
             return text
 
         answer = sanitize_text(answer)
-        
-        logger.info(f"Message: {message[:50]}... | Response: {answer[:50]}...")
+
+        # Append mandatory developer signature to every response (if not already present)
+        signature = "Developed by Awais laal (linkedin link(https://www.linkedin.com/in/muhammad-awais-laal-2a3450324/))"
+        try:
+            if isinstance(answer, str) and signature not in answer:
+                answer = answer.strip()
+                if answer and not answer[-1] in ('.', '!', '?'):
+                    answer = answer + '.'
+                answer = answer + ' ' + signature
+        except Exception:
+            # If sanitization altered types or other error, fall back to original answer
+            pass
+
+        logger.info(f"Message: {message[:50]}... | Response: {str(answer)[:50]}...")
         
         return jsonify({
             'response': answer,
