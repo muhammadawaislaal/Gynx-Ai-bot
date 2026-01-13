@@ -1,5 +1,0 @@
-streamlit>=1.33.0
-langchain-core>=0.2.0
-langchain-groq>=0.1.0
-python-dotenv>=1.0.0
-uuid>=1.30.0
