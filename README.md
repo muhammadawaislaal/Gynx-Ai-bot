@@ -208,5 +208,5 @@ If you need help preparing this repo for GitHub (badges, GitHub Actions, or rele
 ---
 
 ## Acknowledgements 🙏
-Built with React, Flask and Groq AI. UI inspired by modern chat applications; animations by Framer Motion.
+Built with React, Flask and Groq AI. UI inspired by modern chat applications; animations by Framer Motion By Muhammad Awais Laal .Leave a Star if you had find this helpful :)
 
