@@ -55,7 +55,7 @@ def get_llm():
 # System prompts
 # System prompts
 # System prompts
-WIXEN_AI_PROMPT = """You are Wixen, the intelligent AI assistant. 🦊
+NOVA_AI_PROMPT = """You are Nova, the intelligent AI assistant. 🦊
 Your goal is to be helpful, concise, and professional.
 
 When you answer:
@@ -151,7 +151,7 @@ def chat():
                     context=context
                 )
             else:
-                system_prompt = WIXEN_AI_PROMPT.format(context=context)
+                system_prompt = NOVA_AI_PROMPT.format(context=context)
             
             # Create prompt template
             prompt = ChatPromptTemplate.from_messages([
@@ -222,11 +222,11 @@ def health():
     """Health check endpoint"""
     return jsonify({
         'status': 'healthy',
-        'service': 'Wixen AI Backend',
+        'service': 'Nova AI Backend',
         'version': '1.0.0'
     })
 
 if __name__ == '__main__':
-    logger.info("Starting Wixen AI Backend...")
+    logger.info("Starting Nova AI Backend...")
     logger.info(f"Server running on http://localhost:{Config.PORT}")
     app.run(debug=Config.DEBUG, port=Config.PORT, host='0.0.0.0')

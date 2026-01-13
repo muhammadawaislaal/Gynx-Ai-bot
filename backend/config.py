@@ -8,7 +8,7 @@ class Config:
     """Configuration class for Flask application"""
     
     # Flask settings
-    SECRET_KEY = os.environ.get('SECRET_KEY', 'wixen-secret-key-2026')
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'nova-secret-key-2026')
     DEBUG = os.environ.get('FLASK_DEBUG', 'True') == 'True'
     PORT = int(os.environ.get('PORT', 5000))
     

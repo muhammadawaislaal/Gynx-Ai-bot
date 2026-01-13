@@ -1,4 +1,4 @@
-# 🚀 Quick Start Guide - Wixen AI Chatbot
+# 🚀 Quick Start Guide - Nova AI Chatbot
 
 ## ✅ PRE-FLIGHT CHECKLIST
 
@@ -33,7 +33,7 @@ python app.py
 
 **Expected Output:**
 ```
-Starting Wixen AI Backend...
+Starting Nova AI Backend...
 Server running on http://localhost:5000
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5000
@@ -91,7 +91,7 @@ Once both servers are running:
 ### Test 2: Open Chat
 - ✅ Click the chat button
 - ✅ Chat window opens with smooth animation
-- ✅ See Wixen AI profile with avatar
+- ✅ See Nova AI profile with avatar
 - ✅ Initial greeting message appears
 
 ### Test 3: Send Message
@@ -190,12 +190,12 @@ Mark each item as you verify:
 
 ## ✅ SUCCESS CRITERIA
 
-**Your Wixen chatbot is FULLY FUNCTIONAL when:**
+**Your Nova chatbot is FULLY FUNCTIONAL when:**
 
 1. ✅ Backend server running without errors
 2. ✅ Frontend opens in browser at localhost:3000
 3. ✅ Greeting messages rotate every 4 seconds
-4. ✅ Chat opens with AI agent (Wixen)
+4. ✅ Chat opens with AI agent (Nova)
 5. ✅ AI responds to questions about UMTI Tech
 6. ✅ Can switch to human agent profiles
 7. ✅ All 5 human agents work correctly

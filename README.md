@@ -1,4 +1,4 @@
-# Wixen — AI Chatbot 🚀
+# Nova — AI Chatbot 🚀
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue) ![Node.js](https://img.shields.io/badge/Node-16%2B-green)
 
@@ -39,7 +39,7 @@ Professional, extensible AI chatbot built with a React frontend and Flask backen
 ## Project Structure 📁
 
 ```
-Wixen/
+Nova/
 ├── backend/                 # Flask API and server-side logic
 │   ├── app.py               # Flask application and routes
 │   ├── config.py            # App configuration and settings
@@ -120,7 +120,7 @@ Request (example):
 {
   "message": "Hello",
   "conversation_history": [],
-  "current_agent": { "id": 0, "name": "Wixen" }
+  "current_agent": { "id": 0, "name": "Nova" }
 }
 ```
 Response (example):

@@ -1,5 +1,5 @@
 """
-Human Agent Profiles for Wixen Chatbot
+Human Agent Profiles for Nova Chatbot
 Defines 5 Human profiles + 1 AI Profile
 """
 
@@ -9,53 +9,53 @@ ASSET_BASE_URL = "/assets/agents/"
 AGENT_PROFILES = [
     {
         "id": 1,
-        "name": "Sarah",
+        "name": "Alex",
         "role": "Senior Support Specialist",
         "country": "USA",
-        "avatar": f"{ASSET_BASE_URL}sarah.jpg",
-        "greeting": "Hi! I'm Sarah. I'm here to help with any detailed questions about the project. How can I assist you today?"
+        "avatar": f"{ASSET_BASE_URL}alex.jpg",
+        "greeting": "Hi! I'm Alex. I'm here to help with any detailed questions about the project. How can I assist you today?"
     },
     {
         "id": 2,
-        "name": "Fatima",
+        "name": "Taylor",
         "role": "Solutions Consultant",
         "country": "Pakistan",
-        "avatar": f"{ASSET_BASE_URL}fatima.jpg",
-        "greeting": "Welcome! I'm Fatima. I specialize in our technical solutions. How may I guide you specifically regarding your project?"
+        "avatar": f"{ASSET_BASE_URL}taylor.jpg",
+        "greeting": "Welcome! I'm Taylor. I specialize in technical solutions. How may I guide you specifically regarding your project?"
     },
     {
         "id": 3,
-        "name": "James",
+        "name": "Jordan",
         "role": "Technical Lead",
         "country": "UK",
-        "avatar": f"{ASSET_BASE_URL}james.jpg",
-        "greeting": "Hello, I'm James. I can help with technical architecture and deeply complex queries. What's on your mind?"
+        "avatar": f"{ASSET_BASE_URL}jordan.jpg",
+        "greeting": "Hello, I'm Jordan. I can help with technical architecture and complex queries. What's on your mind?"
     },
     {
         "id": 4,
-        "name": "David",
+        "name": "Casey",
         "role": "Client Success Manager",
         "country": "USA",
-        "avatar": f"{ASSET_BASE_URL}david.jpg",
-        "greeting": "Hey there! I'm David. I want to ensure you have the best experience with this project. How can I facilitate that today?"
+        "avatar": f"{ASSET_BASE_URL}casey.jpg",
+        "greeting": "Hey there! I'm Casey. I want to ensure you have the best experience with this project. How can I facilitate that today?"
     },
     {
         "id": 5,
-        "name": "Emily",
+        "name": "Riley",
         "role": "Business Development",
         "country": "Australia",
         "avatar": "https://i.pravatar.cc/150?img=38", # Placeholder for the 5th human if image absent
-        "greeting": "Hi! I'm Emily. Interested in partnering with us? Let's discuss how we can grow together."
+        "greeting": "Hi! I'm Riley. Interested in partnering with the project? Let's discuss possibilities."
     }
 ]
 
 # AI Agent Profile (default)
 AI_AGENT_PROFILE = {
     "id": 0,
-    "name": "Wixen",
+    "name": "Nova",
     "role": "AI Assistant",
-    "avatar": f"{ASSET_BASE_URL}wixen_fox.png",
-    "greeting": "Hello! I'm Wixen, the AI assistant. How can I help you today? 🦊"
+    "avatar": f"{ASSET_BASE_URL}nova_assistant.png",
+    "greeting": "Hello! I'm Nova, the AI assistant. How can I help you today? 🦊"
 }
 
 def get_agent_profile(agent_id=0):

@@ -4,7 +4,7 @@ Tests all backend components without starting the server
 """
 
 print("=" * 50)
-print("WIXEN BACKEND VERIFICATION TEST")
+print("NOVA BACKEND VERIFICATION TEST")
 print("=" * 50)
 
 # Test 1: Import all modules
