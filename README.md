@@ -27,6 +27,8 @@ Professional, extensible AI chatbot built with a React frontend and Flask backen
 - Auto-rotating greeting messages and responsive UI
 - Clear API for integration and customization
 
+![CI](https://github.com/muhammadawaislaal/Multi_Agent-Ai-bot/actions/workflows/ci.yml/badge.svg)
+
 ## Features ✅
 - Conversational context handling
 - Human agent handoff (on-demand or keyword-triggered)
@@ -87,6 +89,12 @@ npm start
 
 > Tip: Use `REACT_APP_API_URL` in the frontend `.env` when pointing to a different backend URL.
 
+## Screenshot
+
+Add a screenshot to `assets/` (recommended `assets/screenshot.png`) and reference it below. Example:
+
+![Chat widget demo](assets/screenshot.png)
+
 ---
 
 ## Configuration 🔧
@@ -145,12 +153,25 @@ pytest -q
 
 Add tests for any new behavior you implement.
 
+## Troubleshooting Tips
+- If push or authentication to GitHub fails, verify your credentials or use an SSH remote.
+- For CORS or API connectivity issues, confirm `REACT_APP_API_URL` and backend `PORT` values.
+- If the Groq API rate-limits you, reduce request frequency or contact Groq support.
+
 ---
 
 ## Deployment & CI/CD 📦
 - Containerize backend with a simple `Dockerfile` and deploy to your preferred cloud provider.
 - Use GitHub Actions for linting, testing and building the frontend.
 - Add repository badges (build, coverage) to this README once CI is configured.
+
+### Example GitHub Actions
+
+This repository includes a lightweight CI workflow (`.github/workflows/ci.yml`) that:
+- Installs Python dependencies and runs `pytest` for the backend
+- Installs Node and runs `npm ci` and `npm run build` for the frontend (if present)
+
+Once Actions completes, the badge at the top will reflect build status.
 
 ---
 
