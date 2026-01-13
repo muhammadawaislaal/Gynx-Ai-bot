@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
@@ -15,6 +17,14 @@ logger = logging.getLogger(__name__)
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)  # Enable CORS for React frontend
+
+# Rate limiter
+limiter = Limiter(
+    key_func=get_remote_address,
+    default_limits=[Config.RATE_LIMIT],
+    storage_uri="memory://",
+)
+limiter.init_app(app)
 
 # Validate configuration
 try:
@@ -81,6 +91,7 @@ Current question:
 """
 
 @app.route('/api/chat', methods=['POST'])
+@limiter.limit("%s" % Config.RATE_LIMIT)
 def chat():
     """Handle chat messages"""
     try:
@@ -91,12 +102,18 @@ def chat():
         
         if not message:
             return jsonify({'error': 'Message is required'}), 400
+
+        # Enforce message length limit
+        if len(message) > Config.MAX_MESSAGE_LENGTH:
+            return jsonify({'error': f'Message too long (max {Config.MAX_MESSAGE_LENGTH} characters)'}), 413
         
         # Build context from conversation history
+        # Build context from conversation history (bounded)
+        limited_history = conversation_history[-Config.MAX_CONVERSATION_ITEMS:] if conversation_history else []
         context = "\n".join([
             f"{msg.get('role', 'user')}: {msg.get('content', '')}"
-            for msg in conversation_history[-6:]  # Last 6 messages for context
-        ]) if conversation_history else "No previous conversation"
+            for msg in limited_history
+        ]) if limited_history else "No previous conversation"
         
         # Determine which prompt to use
         is_human_agent = current_agent.get('id', 0) != 0
@@ -155,6 +172,24 @@ def chat():
             
             response = chain.invoke({"question": message})
             answer = response.content
+
+        # Sanitize and redact sensitive content from AI response
+        def sanitize_text(text: str) -> str:
+            import re
+            if not isinstance(text, str):
+                return text
+            # Remove emails
+            text = re.sub(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}", "[redacted]", text)
+            # Remove obvious organization names (generic redaction)
+            text = re.sub(r"(?i)\b(UMTI\s*Tech\s*Solutions|UMTI\s*Tech|UMTI)\b", "[redacted organization]", text)
+            # Remove URLs
+            text = re.sub(r"https?://\S+", "[redacted url]", text)
+            # Trim very long responses
+            if len(text) > 2000:
+                text = text[:2000] + "..."
+            return text
+
+        answer = sanitize_text(answer)
         
         logger.info(f"Message: {message[:50]}... | Response: {answer[:50]}...")
         

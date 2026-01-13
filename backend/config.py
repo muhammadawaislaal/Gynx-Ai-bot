@@ -19,6 +19,10 @@ class Config:
     DEFAULT_MODEL = "llama-3.1-8b-instant"
     TEMPERATURE = 0.7
     MAX_TOKENS = 2000
+    # Limits and safety
+    MAX_MESSAGE_LENGTH = int(os.environ.get('MAX_MESSAGE_LENGTH', 1000))
+    MAX_CONVERSATION_ITEMS = int(os.environ.get('MAX_CONVERSATION_ITEMS', 12))
+    RATE_LIMIT = os.environ.get('RATE_LIMIT', '30 per minute')
     
     @staticmethod
     def validate():
