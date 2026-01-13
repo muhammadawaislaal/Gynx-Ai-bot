@@ -13,7 +13,7 @@ AGENT_PROFILES = [
         "role": "Senior Support Specialist",
         "country": "USA",
         "avatar": f"{ASSET_BASE_URL}sarah.jpg",
-        "greeting": "Hi! I'm Sarah. I'm here to help you with any detailed questions about UMTI Tech Solutions. How can I assist you today?"
+        "greeting": "Hi! I'm Sarah. I'm here to help with any detailed questions about the project. How can I assist you today?"
     },
     {
         "id": 2,
@@ -37,7 +37,7 @@ AGENT_PROFILES = [
         "role": "Client Success Manager",
         "country": "USA",
         "avatar": f"{ASSET_BASE_URL}david.jpg",
-        "greeting": "Hey there! I'm David. I want to ensure you have the best experience with UMTI Tech. How can I facilitate that today?"
+        "greeting": "Hey there! I'm David. I want to ensure you have the best experience with this project. How can I facilitate that today?"
     },
     {
         "id": 5,
@@ -55,7 +55,7 @@ AI_AGENT_PROFILE = {
     "name": "Wixen",
     "role": "AI Assistant",
     "avatar": f"{ASSET_BASE_URL}wixen_fox.png",
-    "greeting": "Hello! I'm Wixen, UMTI Tech Solutions' AI assistant. How can I help you today? 🦊"
+    "greeting": "Hello! I'm Wixen, the AI assistant. How can I help you today? 🦊"
 }
 
 def get_agent_profile(agent_id=0):

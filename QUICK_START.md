@@ -95,13 +95,14 @@ Once both servers are running:
 - ✅ Initial greeting message appears
 
 ### Test 3: Send Message
-- ✅ Type: "What services does UMTI Tech offer?"
-- ✅ Press Enter or click send button
-- ✅ See typing indicator (3 bouncing dots)
-- ✅ Receive AI response about UMTI Tech services
+ ✅ Type: "What services does the organization offer?"
+ ✅ Press Enter or click send button
+ ✅ See typing indicator (3 bouncing dots)
+ ✅ Receive AI response about available services
 
-### Test 4: Request Human Agent
+ [ ] AI responds with information about the organization or application
 - ✅ Type: "I want to talk to a human agent"
+ 4. ✅ AI responds to questions about the organization or application
 - ✅ AI responds acknowledging the request
 - ✅ See "Connecting to agent..." indicator
 - ✅ **Wait 5 seconds**

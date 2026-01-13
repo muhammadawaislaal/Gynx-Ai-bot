@@ -1,8 +1,8 @@
-# Wixen — AI Chatbot for UMTI Tech Solutions 🚀
+# Wixen — AI Chatbot 🚀
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue) ![Node.js](https://img.shields.io/badge/Node-16%2B-green)
 
-Professional, extensible AI chatbot built with a React frontend and Flask backend. Designed for UMTI Tech Solutions to provide conversational AI support with optional human agent handoffs and configurable greetings.
+Professional, extensible AI chatbot built with a React frontend and Flask backend. Provides conversational AI support with optional human agent handoffs and configurable greetings.
 
 ---
 
@@ -201,7 +201,7 @@ git push -u origin main
 
 ## License & Contact 📄
 - **License**: MIT — see `LICENSE` in the repository
-- **Maintainer**: UMTI Tech Solutions
+- **Maintainer**: Project Maintainers
 
 If you need help preparing this repo for GitHub (badges, GitHub Actions, or release notes), I can add recommended files and CI workflow templates.
 
