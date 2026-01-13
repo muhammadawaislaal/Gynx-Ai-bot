@@ -1,0 +1,5 @@
+Flask==3.0.0
+flask-cors==4.0.0
+langchain-groq>=0.1.0
+langchain-core>=0.1.40
+python-dotenv==1.0.0
