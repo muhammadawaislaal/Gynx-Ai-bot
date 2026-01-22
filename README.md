@@ -1,4 +1,4 @@
-# Nova — AI Chatbot 🚀
+# WIxen— AI Chatbot 🚀
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue) ![Node.js](https://img.shields.io/badge/Node-16%2B-green)
 
